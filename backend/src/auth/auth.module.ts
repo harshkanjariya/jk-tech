@@ -1,12 +1,11 @@
-import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { UsersModule } from '../users/users.module';
-import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { GoogleStrategy } from './google.strategy';
-import { FacebookStrategy } from './facebook.strategy';
-import { AuthController } from './auth.controller';
+import {Module} from '@nestjs/common';
+import {AuthService} from './auth.service';
+import {UsersModule} from '../users/users.module';
+import {PassportModule} from '@nestjs/passport';
+import {JwtModule} from '@nestjs/jwt';
+import {ConfigModule, ConfigService} from '@nestjs/config';
+import {AuthController} from './auth.controller';
+import * as admin from 'firebase-admin';
 
 @Module({
   imports: [
@@ -18,11 +17,29 @@ import { AuthController } from './auth.controller';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '1h' },
+        signOptions: {expiresIn: '1h'},
       }),
     }),
   ],
-  providers: [AuthService, GoogleStrategy, FacebookStrategy],
+  providers: [
+    AuthService,
+    {
+      provide: 'FIREBASE_ADMIN',
+      useFactory: () => {
+        if (!admin.apps.length) {
+          return admin.initializeApp({
+            credential: admin.credential.cert({
+              projectId: process.env.FIREBASE_PROJECT_ID,
+              clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+              privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+            }),
+          });
+        }
+        return admin.app();
+      }
+    }
+  ],
   controllers: [AuthController],
 })
-export class AuthModule {}
+export class AuthModule {
+}
