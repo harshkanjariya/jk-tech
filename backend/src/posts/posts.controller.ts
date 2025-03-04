@@ -27,9 +27,9 @@ export class PostsController {
 
   @Get("/my")
   async getMyPosts(
+    @Req() req: Request,
     @Query('page') page = 1,
     @Query('limit') limit = 10,
-    @Req() req: Request
   ) {
     return await this.postsService.getPaginatedMyPosts(+page, +limit, req['user']);
   }

@@ -26,8 +26,8 @@ export class AuthService {
         // ✅ Create new user if not found
         user = this.usersRepository.create({
           providerId: decodedToken.uid,
-          name: decodedToken.name || 'Unknown User',
-          email: decodedToken.email || '',
+          name: decodedToken.name,
+          email: decodedToken.email,
           provider: 'firebase',
         });
 

@@ -37,7 +37,7 @@ export class PostsService {
   }
 
   async getPaginatedMyPosts(page: number, limit: number, user: any) {
-    if (!user) {
+    if (!user?.id) {
       throw new UnauthorizedException();
     }
 
