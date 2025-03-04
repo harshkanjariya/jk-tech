@@ -1,9 +1,40 @@
-<div *ngIf="posts.length > 0">
-  <h3>Your Posts</h3>
-  <ul>
-    <li *ngFor="let post of posts">
-      <h4>{{ post.title }}</h4>
-      <p>{{ post.body }}</p>
-    </li>
-  </ul>
+<div class="post-list-container">
+  <h3>Recent Posts</h3>
+
+  <!-- Floating Action Button for Creating a Post -->
+  <button mat-fab color="primary" class="fab-button" (click)="creatingPost = true">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <!-- Create Post Form -->
+  <div *ngIf="creatingPost" class="post-form-wrapper">
+    <form (submit)="createPost()" class="post-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Post Title</mat-label>
+        <input matInput type="text" placeholder="Title" [(ngModel)]="newPost.title" name="title" required />
+      </mat-form-field>
+
+      <div class="editor-container">
+        <editor [(ngModel)]="newPost.content" name="content" [init]="TINYMCE_CONFIG"></editor>
+      </div>
+
+      <div class="button-group">
+        <button mat-raised-button color="primary" type="submit">Create</button>
+        <button mat-raised-button color="warn" type="button" (click)="creatingPost = false">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="posts.length > 0; else noPosts">
+    <app-post-card
+      *ngFor="let post of posts" [post]="post"
+      [onClick]="openPost.bind(this)"
+      [onDelete]="deletePost.bind(this)"
+      showDeleteButton
+    />
+  </div>
+
+  <ng-template #noPosts>
+    <p>No posts available.</p>
+  </ng-template>
 </div>

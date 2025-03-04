@@ -6,9 +6,12 @@ import {JwtModule} from '@nestjs/jwt';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {AuthController} from './auth.controller';
 import * as admin from 'firebase-admin';
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {User} from "../users/user.entity";
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([User]),
     ConfigModule,
     UsersModule,
     PassportModule,

@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DashboardComponent } from './dashboard.component';
-import { RouterModule } from '@angular/router';
-import { dashboardRoutes } from './dashboard.routes';
-import { PostListComponent } from './components/post-list.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {DashboardComponent} from './dashboard.component';
+import {RouterModule} from '@angular/router';
+import {dashboardRoutes} from './dashboard.routes';
 
 @NgModule({
   imports: [
@@ -12,4 +11,5 @@ import { PostListComponent } from './components/post-list.component';
     DashboardComponent,
   ],
 })
-export class DashboardModule {}
+export class DashboardModule {
+}

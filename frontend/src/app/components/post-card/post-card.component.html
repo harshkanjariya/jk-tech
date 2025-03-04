@@ -1,0 +1,12 @@
+<div class="post-card" (click)="onClick(post.id)">
+  <h3>{{ post.title }}</h3>
+  <small>By: {{ post.author?.name || 'Unknown' }} | {{ post.createdAt | date }}</small>
+
+  <button
+    *ngIf="showDeleteButton"
+    mat-icon-button color="warn"
+    class="delete-button"
+    (click)="deletePost($event, post.id)">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>

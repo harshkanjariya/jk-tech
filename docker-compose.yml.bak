@@ -31,5 +31,11 @@ services:
     depends_on:
       - backend
 
+  tinymce:
+    build: ./tinymce
+    container_name: tinymce
+    ports:
+      - "8081:80"
+
 volumes:
   postgres_data:

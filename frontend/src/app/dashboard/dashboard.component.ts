@@ -11,7 +11,17 @@ import {CommonModule} from '@angular/common';
   imports: [CommonModule, PostListComponent]
 })
 export class DashboardComponent {
+  isLoggedIn = false;
+
   constructor(private router: Router) {}
+
+  checkLoginStatus(): void {
+    this.isLoggedIn = !!localStorage.getItem('token');
+  }
+
+  goHome(): void {
+    this.router.navigate(['/']);
+  }
 
   logout(): void {
     localStorage.removeItem('token');

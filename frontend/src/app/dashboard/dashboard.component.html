@@ -1,5 +1,16 @@
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-logo">
+    <h1>My Blog</h1>
+  </div>
+  <div class="nav-links">
+    <button mat-button (click)="goHome()">Home</button>
+    <button *ngIf="isLoggedIn" mat-button (click)="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- Dashboard Content -->
 <div class="dashboard-container">
   <h2>Welcome to Dashboard</h2>
   <app-post-list></app-post-list>
-  <button (click)="logout()">Logout</button>
 </div>

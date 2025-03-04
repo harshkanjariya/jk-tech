@@ -1,0 +1,25 @@
+<div *ngIf="post" class="content-wrapper">
+  <h2 *ngIf="!editing" class="post-title">{{ post.title }}</h2>
+  <p *ngIf="!editing" class="post-content" [innerHTML]="post.content"></p>
+  <small class="post-meta">By: {{ post.author?.name || 'Unknown' }} | {{ post.createdAt | date }}</small>
+
+  <!-- Floating Edit Button (FAB) - Visible only to the author -->
+  <button *ngIf="isAuthor && !editing" mat-fab color="primary" class="fab-button" (click)="enableEditing()">
+    <mat-icon>edit</mat-icon>
+  </button>
+
+  <!-- Edit Form -->
+  <div *ngIf="editing" class="edit-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" [(ngModel)]="updatedPost.title"/>
+    </mat-form-field>
+
+    <editor [(ngModel)]="updatedPost.content" [init]="TINYMCE_CONFIG" class="editor-box"></editor>
+
+    <div class="button-group">
+      <button mat-raised-button color="primary" (click)="saveChanges()">Save</button>
+      <button mat-raised-button color="warn" (click)="editing = false">Cancel</button>
+    </div>
+  </div>
+</div>
